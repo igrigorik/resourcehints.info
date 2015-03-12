@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Reactive HTTPS preconnect</title>
+
+  <script>
+    function reactivePreconnect() {
+      var o=document.createElement("LINK");
+      o.setAttribute("rel", "preconnect");
+      o.setAttribute("href", "https://engineering.linkedin.com/");
+      document.head.appendChild(o);
+      console.log("Preconnecting to destination...")
+    }
+  </script>
+</head>
+<body>
+
+  <p>Clicking on <a id="link" onclick="reactivePreconnect()" href="https://bit.ly/1HLC9bQ">https://bit.ly/1HLC9bQ</a> should trigger a preconnect (DNS+TCP+TLS) for <code>https://engineering.linkedin.com/</code>, which should be performed in parallel with handshake for <code>https://bit.ly</code>.
+
+  <p>WPT script to simulate the click:</p>
+  <pre>
+combineSteps
+navigate  http://resourcehints.info/preconnect/reactive-https.html
+clickAndWait  id=link
+  </pre>
+
+</body>
+</html>
