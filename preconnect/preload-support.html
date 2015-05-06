@@ -7,18 +7,25 @@
   <!-- blocking slow script -->
   <script src='https://fake-response.appspot.com/?sleep=3'></script>
 
-  <link href='https://fonts.gstatic.com' rel='preconnect'>
-  <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:700|Open+Sans' rel='stylesheet' type='text/css'>
-
-  <style>
-   h1, h2, h3 { font-family: 'Roboto Slab', serif; }
-   body { font-family: 'Open Sans', serif;}
-  </style>
-
+  <!-- preconnect hint -->
+  <link href='https://api.github.com/' rel='preconnect'>
 </head>
   <body>
-
   <h2>Testing preload scanner support</h2>
-  <p>Preconnect directives should be recognized by the preload scanner, which should initiate the preconnect for <code>fonts.gstatic.com</code> while the document parser is blocked on a parser-blocking script.</p>
+
+  <p>Preconnect directives should be recognized by the preload scanner, which should initiate the preconnect for <code>https://api.github.com/</code> while the document parser is blocked on a parser-blocking script. Once the parser is unblocked, it should fire the GitHub API request over an already established socket (see source).</p>
+
+  <script>
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', 'https://api.github.com/meta');
+    xhr.onload = function() {
+      var pre = document.createElement('pre');
+      pre.innerText = xhr.responseText;
+      document.body.appendChild(pre);
+    };
+
+    xhr.send();
+  </script>
+
 </body>
 </html>
