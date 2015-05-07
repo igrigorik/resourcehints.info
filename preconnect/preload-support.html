@@ -8,23 +8,17 @@
   <script src='https://fake-response.appspot.com/?sleep=3'></script>
 
   <!-- preconnect hint -->
-  <link href='https://api.github.com/' rel='preconnect'>
+  <link href='https://upload.wikimedia.org' rel='preconnect'>
 </head>
   <body>
   <h2>Testing preload scanner support</h2>
 
-  <p>Preconnect directives should be recognized by the preload scanner, which should initiate the preconnect for <code>https://api.github.com/</code> while the document parser is blocked on a parser-blocking script. Once the parser is unblocked, it should fire the GitHub API request over an already established socket (see source).</p>
+  <p>Preconnect directives should be recognized by the preload scanner, which should initiate the preconnect for <code>https://upload.wikimedia.org</code> while the document parser is blocked on a parser-blocking script. Once the parser is unblocked, it should dispatch the image request over an already established socket (see source).</p>
 
   <script>
-    var xhr = new XMLHttpRequest();
-    xhr.open('GET', 'https://api.github.com/meta');
-    xhr.onload = function() {
-      var pre = document.createElement('pre');
-      pre.innerText = xhr.responseText;
-      document.body.appendChild(pre);
-    };
-
-    xhr.send();
+    var img = document.createElement("img");
+    img.src = 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/HTML5_logo_and_wordmark.svg/200px-HTML5_logo_and_wordmark.svg.png';
+    document.body.appendChild(img);
   </script>
 
 </body>
